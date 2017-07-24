@@ -69,9 +69,9 @@ Allow users to sign up, sign in, view their profile page, and sign out.
 - [x] __20:__ Sign in to their account if they already have one.
 - [x] __20:__ Be redirected to their public profile page after signing in (e.g. "/users/1").
 - [x] __20:__ On their public profile page, see their name, email, and their join date.
-- [ ] __20:__ See the site-wide header on every page.
-- [ ] __20:__ See a link to "Profile" and "Sign Out" if they're logged in in the site-wide header.
-- [ ] __20:__ See links to "Sign In" and "Sign Up" if they're logged out in the site-wide header.
+- [x] __20:__ See the site-wide header on every page.
+- [x] __20:__ See a link to "Profile" and "Sign Out" if they're logged in in the site-wide header.
+- [x] __20:__ See links to "Sign In" and "Sign Up" if they're logged out in the site-wide header.
 
 ## Stage 2: Album Reviews
 
