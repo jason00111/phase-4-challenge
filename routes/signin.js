@@ -19,6 +19,7 @@ router.post('/', (request, response) => {
       } else if (user.password !== password) {
         response.status(403).render('error', {error: {message: 'Incorrect password.'}})
       } else {
+        request.session.userId = user.id
         response.redirect(`users/${user.id}`)
       }
     }

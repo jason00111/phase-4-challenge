@@ -1,13 +1,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieSession = require('cookie-session')
 const database = require('./database')
 const app = express()
 
+const keys = require('./keys')
 const signupRoute = require('./routes/signup')
 const signinRoute = require('./routes/signin')
 
 require('ejs')
 app.set('view engine', 'ejs');
+
+app.use(cookieSession({
+  name: 'user',
+  keys: keys
+}))
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
