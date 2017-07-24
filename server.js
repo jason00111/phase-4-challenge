@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const database = require('./database')
 const app = express()
 
+const signupRoute = require('./routes/signup')
+
 require('ejs')
 app.set('view engine', 'ejs');
 
@@ -18,6 +20,8 @@ app.get('/', (request, response) => {
     }
   })
 })
+
+app.use('/signup', signupRoute)
 
 app.get('/albums/:albumID', (request, response) => {
   const albumID = request.params.albumID

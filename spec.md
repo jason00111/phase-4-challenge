@@ -65,7 +65,7 @@ Allow users to sign up, sign in, view their profile page, and sign out.
 - [x] __20:__ Navigate to "/" and see a basic home page.
 - [x] __20:__ See the name of the website on the home page.
 - [x] __20:__ See links to "Sign In" and "Sign Up" on the home page.
-- [ ] __20:__ Sign up for an account with name, email, and password.
+- [x] __20:__ Sign up for an account with name, email, and password.
 - [ ] __20:__ Sign in to their account if they already have one.
 - [ ] __20:__ Be redirected to their public profile page after signing in (e.g. "/users/1").
 - [ ] __20:__ On their public profile page, see their name, email, and their join date.
