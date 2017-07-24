@@ -46,6 +46,25 @@ app.get('/albums/:albumID', (request, response) => {
   })
 })
 
+app.get('/users/:userID', (request, response) => {
+  const userID = request.params.userID
+
+  if (userID != request.session.userID) {
+    response.redirect('/signin')
+  } else {
+    database.getUserByID(userID, (error, users) => {
+      if (error) {
+        response.status(500).render('error', { error: error })
+      } else {
+        const user = users[0]
+        user.joined = (new Date(user.joined)).toDateString()
+
+        response.render('profile', { user: user })
+      }
+    })
+  }
+})
+
 app.use((request, response) => {
   response.status(404).render('not_found')
 })
