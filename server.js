@@ -4,6 +4,7 @@ const database = require('./database')
 const app = express()
 
 const signupRoute = require('./routes/signup')
+const signinRoute = require('./routes/signin')
 
 require('ejs')
 app.set('view engine', 'ejs');
@@ -22,6 +23,8 @@ app.get('/', (request, response) => {
 })
 
 app.use('/signup', signupRoute)
+
+app.use('/signin', signinRoute)
 
 app.get('/albums/:albumID', (request, response) => {
   const albumID = request.params.albumID

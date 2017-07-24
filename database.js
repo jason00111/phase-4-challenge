@@ -35,8 +35,13 @@ const addUser = function(name, email, password, callback) {
     [name, email, password], callback)
 }
 
+const getUserByEmail = function(email, callback) {
+  query("SELECT * FROM users WHERE email = $1", [email], callback)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
-  addUser
+  addUser,
+  getUserByEmail
 }
