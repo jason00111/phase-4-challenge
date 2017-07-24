@@ -55,7 +55,14 @@ app.get('/albums/:albumID', (request, response) => {
       response.status(500).render('error', { error: error, userID: request.session.userID })
     } else {
       const album = albums[0]
-      response.render('album', { album: album, userID: request.session.userID })
+
+      database.getReviewsByAlbumID(albumID, (error, reviews) => {
+        if (error) {
+          response.status(500).render('error', { error: error, userID: request.session.userID })
+        } else {
+          response.render('album', { album: album, reviews: reviews, userID: request.session.userID })
+        }
+      })
     }
   })
 })
