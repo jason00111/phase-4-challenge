@@ -43,10 +43,34 @@ const getUserByID = function(userID, callback) {
   query("SELECT * FROM users WHERE id = $1", [userID], callback)
 }
 
+const recentReviewsQuery = `
+  SELECT
+    reviews.id, reviews.created, reviews.review,
+    users.id AS user_id, users.name AS user,
+    albums.id AS album_id, albums.title AS album, albums.artist
+  FROM
+    reviews
+  JOIN
+    albums
+  ON
+    albums.id = reviews.album_id
+  JOIN
+    users
+  ON
+    users.id = reviews.user_id
+  ORDER BY
+    created
+  DESC LIMIT 3`
+
+const getRecentReviews = function(callback) {
+  query(recentReviewsQuery, [], callback)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
   addUser,
   getUserByEmail,
-  getUserByID
+  getUserByID,
+  getRecentReviews
 }

@@ -24,7 +24,16 @@ app.get('/', (request, response) => {
     if (error) {
       response.status(500).render('error', { error: error, userID: request.session.userID })
     } else {
-      response.render('index', { albums: albums, userID: request.session.userID })
+      database.getRecentReviews((error, reviews) => {
+        if (error) {
+          response.status(500).render('error', { error: error, userID: request.session.userID })
+        } else {
+          reviews.forEach(review => {
+            review.created = (new Date(review.created)).toDateString()
+          })
+          response.render('index', { albums: albums, reviews: reviews, userID: request.session.userID })
+        }
+      })
     }
   })
 })
