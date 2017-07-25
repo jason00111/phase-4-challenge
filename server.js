@@ -7,6 +7,7 @@ const app = express()
 const keys = require('./keys')
 const signupRoute = require('./routes/signup')
 const signinRoute = require('./routes/signin')
+const albumsRoute = require('./routes/albums')
 
 require('ejs')
 app.set('view engine', 'ejs');
@@ -28,9 +29,6 @@ app.get('/', (request, response) => {
         if (error) {
           response.status(500).render('error', { error: error, userID: request.session.userID })
         } else {
-          reviews.forEach(review => {
-            review.created = (new Date(review.created)).toDateString()
-          })
           response.render('index', { albums: albums, reviews: reviews, userID: request.session.userID })
         }
       })
@@ -42,29 +40,11 @@ app.use('/signup', signupRoute)
 
 app.use('/signin', signinRoute)
 
+app.use('/albums', albumsRoute)
+
 app.get('/signout', (request, response) => {
   request.session = null
   response.redirect('/')
-})
-
-app.get('/albums/:albumID', (request, response) => {
-  const albumID = request.params.albumID
-
-  database.getAlbumsByID(albumID, (error, albums) => {
-    if (error) {
-      response.status(500).render('error', { error: error, userID: request.session.userID })
-    } else {
-      const album = albums[0]
-
-      database.getReviewsByAlbumID(albumID, (error, reviews) => {
-        if (error) {
-          response.status(500).render('error', { error: error, userID: request.session.userID })
-        } else {
-          response.render('album', { album: album, reviews: reviews, userID: request.session.userID })
-        }
-      })
-    }
-  })
 })
 
 app.get('/users/:userID', (request, response) => {
@@ -78,8 +58,6 @@ app.get('/users/:userID', (request, response) => {
         response.status(500).render('error', { error: error, userID: request.session.userID })
       } else {
         const user = users[0]
-        user.joined = (new Date(user.joined)).toDateString()
-
         response.render('profile', { user: user, userID: request.session.userID })
       }
     })
