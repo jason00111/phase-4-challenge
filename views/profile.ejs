@@ -29,7 +29,12 @@
   <div class="review-list">
     <% reviews.forEach(function(review) { %>
       <div>
-        <h5><a href="/albums/<%= review.album_id %>"><%= review.album %></a></h5>
+        <h5>
+          <a href="/albums/<%= review.album_id %>"><%= review.album %></a>
+          <a href="/reviews/<%= review.id %>/delete">
+            <img src="../delete.svg" />
+          </a>
+        </h5>
         <p><%= review.artist %></p>
         <p><%= review.created %></p>
         <p><%= review.review %></p>

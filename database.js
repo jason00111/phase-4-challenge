@@ -84,6 +84,10 @@ const getReviewsByUserID = function(userID, callback) {
   query(reviewsQuery + 'WHERE user_id = $1 ORDER BY time DESC', [userID], callback)
 }
 
+const deleteReview = function(reviewID, callback) {
+  query("DELETE FROM reviews WHERE id = $1", [reviewID], callback)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -93,5 +97,6 @@ module.exports = {
   getRecentReviews,
   getReviewsByAlbumID,
   addReview,
-  getReviewsByUserID
+  getReviewsByUserID,
+  deleteReview
 }

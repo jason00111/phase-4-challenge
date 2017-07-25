@@ -8,6 +8,7 @@ const keys = require('./keys')
 const signupRoute = require('./routes/signup')
 const signinRoute = require('./routes/signin')
 const albumsRoute = require('./routes/albums')
+const reviewsRoute = require('./routes/reviews')
 
 require('ejs')
 app.set('view engine', 'ejs');
@@ -41,6 +42,8 @@ app.use('/signup', signupRoute)
 app.use('/signin', signinRoute)
 
 app.use('/albums', albumsRoute)
+
+app.use('/reviews', reviewsRoute)
 
 app.get('/signout', (request, response) => {
   request.session = null

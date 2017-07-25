@@ -38,6 +38,7 @@ router.get('/:albumID/new', (request, response) => {
   })
 })
 
+//refactor into reviews
 router.post('/:albumID/new', (request, response) => {
   const userID = request.session.userID
   const albumID = request.params.albumID
