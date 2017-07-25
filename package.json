@@ -7,8 +7,8 @@
     "start:dev": "nodemon server.js",
     "db:create": "createdb vinyl",
     "db:drop": "dropdb vinyl",
-    "db:schema": "psql -d vinyl < schema.sql",
-    "db:seed": "psql -d vinyl < seed.sql"
+    "db:schema": "psql -d vinyl < database/schema.sql",
+    "db:seed": "psql -d vinyl < database/seed.sql"
   },
   "license": "MIT",
   "dependencies": {
