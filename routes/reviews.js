@@ -12,10 +12,10 @@ router.get('/:reviewID/delete', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    dbReviews.getReviewByID(reviewID, (error, reviews) => {
-      if (error) {
+    dbReviews.getReviewByID(reviewID, (error1, reviews) => {
+      if (error1) {
         response.render('error', {
-          error: error,
+          error: error1,
           userID: request.session.userID
         })
       } else {
@@ -27,8 +27,15 @@ router.get('/:reviewID/delete', (request, response) => {
             userID: request.session.userID
           })
         } else {
-          dbReviews.deleteReview(reviewID, error => {
-            response.redirect('/users/' + userID)
+          dbReviews.deleteReview(reviewID, error2 => {
+            if (error2) {
+              response.render('error', {
+                error: error2,
+                userID: request.session.userID
+              })
+            } else {
+              response.redirect('/users/' + userID)
+            }
           })
         }
       }

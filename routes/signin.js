@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const bcrypt = require('bcrypt')
 const dbUsers = require('../database/users')
 
 router.get('/', (request, response) => {
@@ -8,10 +9,10 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const email = request.body.email
   const password = request.body.password
-  dbUsers.getUserByEmail(email, (error, users) => {
-    if (error) {
+  dbUsers.getUserByEmail(email, (error1, users) => {
+    if (error1) {
       response.status(500).render('error', {
-        error: error,
+        error: error1,
         userID: request.session.userID
       })
     } else {
@@ -22,14 +23,23 @@ router.post('/', (request, response) => {
           error: { message: 'Email not found. Sign up first.' },
           userID: request.session.userID
         })
-      } else if (user.password !== password) {
-        response.status(403).render('error', {
-          error: {message: 'Incorrect password.'},
-          userID: request.session.userID
-        })
       } else {
-        request.session.userID = user.id
-        response.redirect(`users/${user.id}`)
+        bcrypt.compare(password, user.password, (error2, match) => {
+          if (error2) {
+            response.status(500).render('error', {
+              error: error2,
+              userID: request.session.userID
+            })
+          } else if (match) {
+            request.session.userID = user.id
+            response.redirect(`users/${user.id}`)
+          } else {
+            response.status(403).render('error', {
+              error: {message: 'Incorrect password.'},
+              userID: request.session.userID
+            })
+          }
+        })
       }
     }
   })
