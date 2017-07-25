@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const database = require('../database')
+const dbAlbums = require('../database/albums')
+const dbReviews = require('../database/reviews')
 
 const signupRoute = require('./signup')
 const signinRoute = require('./signin')
@@ -8,11 +9,11 @@ const reviewsRoute = require('./reviews')
 const usersRoute = require('./users')
 
 router.get('/', (request, response) => {
-  database.getAlbums((error, albums) => {
+  dbAlbums.getAlbums((error, albums) => {
     if (error) {
       response.status(500).render('error', { error: error, userID: request.session.userID })
     } else {
-      database.getRecentReviews((error, reviews) => {
+      dbReviews.getRecentReviews((error, reviews) => {
         if (error) {
           response.status(500).render('error', { error: error, userID: request.session.userID })
         } else {

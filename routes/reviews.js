@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const database = require('../database')
+const dbAlbums = require('../database/albums')
+const dbReviews = require('../database/reviews')
 
 router.get('/:reviewID/delete', (request, response) => {
   const reviewID = request.params.reviewID
@@ -11,7 +12,7 @@ router.get('/:reviewID/delete', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    database.getReviewByID(reviewID, (error, reviews) => {
+    dbReviews.getReviewByID(reviewID, (error, reviews) => {
       if (error) {
         response.render('error', {
           error: error,
@@ -26,7 +27,7 @@ router.get('/:reviewID/delete', (request, response) => {
             userID: request.session.userID
           })
         } else {
-          database.deleteReview(reviewID, error => {
+          dbReviews.deleteReview(reviewID, error => {
             response.redirect('/users/' + userID)
           })
         }
@@ -45,7 +46,8 @@ router.get('/:albumID/new', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    database.getAlbumsByID(albumID, (error, albums) => {
+    // check this, do we really need albums here?
+    dbAlbums.getAlbumsByID(albumID, (error, albums) => {
       const album = albums[0]
       response.render('newReview', { userID: request.session.userID, album: album })
     })
@@ -68,7 +70,7 @@ router.post('/:albumID/new', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    database.addReview(albumID, userID, review, (error) => {
+    dbReviews.addReview(albumID, userID, review, (error) => {
       if (error) {
         response.status(500).render('error', {
           error: error,

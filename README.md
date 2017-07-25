@@ -11,8 +11,8 @@ Run `$ npm run` to see the list of commands available. To see what each command 
 The app uses a basic Express file structure, and includes SQL files to set up the schema and import data.
 
 ```sh
-albums.sql          # seed album data
-database.js         # database connection and queries
+seed.sql            # seed album data
+database/           # database connection and queries
 package.json        # npm standard
 public/             # static assets go here
 README.md           # you are here

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const database = require('../database')
+const dbUsers = require('../database/users')
 
 router.get('/', (request, response) => {
   response.render('signin', { userID: request.session.userID })
@@ -8,7 +8,7 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const email = request.body.email
   const password = request.body.password
-  database.getUserByEmail(email, (error, users) => {
+  dbUsers.getUserByEmail(email, (error, users) => {
     if (error) {
       response.status(500).render('error', {
         error: error,
