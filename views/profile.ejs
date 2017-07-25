@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vinyl : <%= user.name %></title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <script type="text/javascript" src="/script.js"></script>
+</head>
+<body>
+
+  <% include navbar %>
+
+  <div class="flex-column">
+    <h1><%= user.name %></h1>
+
+    <table>
+      <tr>
+        <td>Email</td>
+        <td><%= user.email %></td>
+      </tr>
+      <tr>
+        <td>Date Joined</td>
+        <td><%= user.joined %></td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

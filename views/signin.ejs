@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vinyl : Sign In</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <script type="text/javascript" src="/script.js"></script>
+</head>
+<body>
+
+  <% include navbar %>
+
+  <div class="flex-column">
+    <h1>Sign In</h1>
+
+    <form method="post" action="/signin" class="flex-column">
+      <label class="form-input">
+        Email
+        <input name="email" type="text">
+      </label>
+
+      <label class="form-input">
+        Password
+        <input name="password" type="password">
+      </label>
+
+      <input type="submit" value="Sign In">
+    </form>
+  </div>
+
+</body>
+</html>
