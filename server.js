@@ -9,6 +9,7 @@ const signupRoute = require('./routes/signup')
 const signinRoute = require('./routes/signin')
 const albumsRoute = require('./routes/albums')
 const reviewsRoute = require('./routes/reviews')
+const usersRoute = require('./routes/users')
 
 require('ejs')
 app.set('view engine', 'ejs');
@@ -45,33 +46,11 @@ app.use('/albums', albumsRoute)
 
 app.use('/reviews', reviewsRoute)
 
+app.use('/users', usersRoute)
+
 app.get('/signout', (request, response) => {
   request.session = null
   response.redirect('/')
-})
-
-app.get('/users/:userID', (request, response) => {
-  const userID = request.params.userID
-
-  if (userID != request.session.userID) {
-    response.redirect('/signin')
-  } else {
-    database.getUserByID(userID, (error, users) => {
-      if (error) {
-        response.status(500).render('error', { error: error, userID: request.session.userID })
-      } else {
-        const user = users[0]
-
-        database.getReviewsByUserID(userID, (error, reviews) => {
-          if (error) {
-            response.status(500).render('error', { error: error, userID: request.session.userID })
-          } else {
-            response.render('profile', { user: user, reviews: reviews, userID: request.session.userID })
-          }
-        })
-      }
-    })
-  }
 })
 
 app.use((request, response) => {
