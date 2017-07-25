@@ -58,7 +58,14 @@ app.get('/users/:userID', (request, response) => {
         response.status(500).render('error', { error: error, userID: request.session.userID })
       } else {
         const user = users[0]
-        response.render('profile', { user: user, userID: request.session.userID })
+
+        database.getReviewsByUserID(userID, (error, reviews) => {
+          if (error) {
+            response.status(500).render('error', { error: error, userID: request.session.userID })
+          } else {
+            response.render('profile', { user: user, reviews: reviews, userID: request.session.userID })
+          }
+        })
       }
     })
   }

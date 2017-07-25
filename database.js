@@ -80,6 +80,10 @@ const addReview = function(albumID, userID, review, callback) {
     [albumID, userID, review], callback)
 }
 
+const getReviewsByUserID = function(userID, callback) {
+  query(reviewsQuery + 'WHERE user_id = $1 ORDER BY time DESC', [userID], callback)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -88,5 +92,6 @@ module.exports = {
   getUserByID,
   getRecentReviews,
   getReviewsByAlbumID,
-  addReview
+  addReview,
+  getReviewsByUserID
 }
