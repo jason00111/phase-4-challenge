@@ -14,7 +14,21 @@
 
   <h2>Reviews</h2>
 
-  <!-- TODO: implement album reviews -->
+  <% if (userID) { %>
+    <a href="/albums/<%= album.id %>/new">Add Review</a>
+  <% } %>
+
+  <div class="review-list">
+    <% reviews.forEach(function(review) { %>
+      <div>
+        <h5><a href="/albums/<%= review.album_id %>"><%= review.album %></a></h5>
+        <p><%= review.artist %></p>
+        <p><%= review.created %></p>
+        <p><%= review.review %></p>
+        <p>by <%= review.user %></p>
+      </div>
+    <% }) %>
+  </div>
 
 </body>
 </html>
