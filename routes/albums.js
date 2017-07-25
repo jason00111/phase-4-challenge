@@ -26,8 +26,8 @@ router.get('/:albumID/new', (request, response) => {
   const albumID = request.params.albumID
 
   if (!userID) {
-    response.render('error', { error: {
-      message: 'You must be logged in to add a review' },
+    response.render('error', {
+      error: { message: 'You must be logged in to add a review' },
       userID: request.session.userID
     })
   } else {
@@ -45,13 +45,13 @@ router.post('/:albumID/new', (request, response) => {
   const review = request.body.review
 
   if (!userID) {
-    response.render('error', { error: {
-      message: 'You must be logged in to add a review' },
+    response.render('error', {
+      error: { message: 'You must be logged in to add a review' },
       userID: request.session.userID
     })
   } else if (!review) {
-    response.render('error', { error: {
-      message: 'You didn\'t write a review' },
+    response.render('error', {
+      error: { message: 'You didn\'t write a review' },
       userID: request.session.userID
     })
   } else {

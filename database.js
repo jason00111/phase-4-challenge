@@ -88,6 +88,10 @@ const deleteReview = function(reviewID, callback) {
   query("DELETE FROM reviews WHERE id = $1", [reviewID], callback)
 }
 
+const getReviewByID = function(reviewID, callback) {
+  query(reviewsQuery + 'WHERE reviews.id = $1', [reviewID], callback)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -98,5 +102,6 @@ module.exports = {
   getReviewsByAlbumID,
   addReview,
   getReviewsByUserID,
-  deleteReview
+  deleteReview,
+  getReviewByID
 }
