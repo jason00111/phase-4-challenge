@@ -26,16 +26,16 @@ router.get('/:albumID/new', (request, response) => {
   const albumID = request.params.albumID
 
   if (!userID) {
-    response.render('error', { error: {
-      message: 'You must be logged in to add a review' },
+    response.render('error', {
+      error: { message: 'You must be logged in to add a review' },
       userID: request.session.userID
     })
+  } else {
+    database.getAlbumsByID(albumID, (error, albums) => {
+      const album = albums[0]
+      response.render('newReview', { userID: request.session.userID, album: album })
+    })
   }
-
-  database.getAlbumsByID(albumID, (error, albums) => {
-    const album = albums[0]
-    response.render('newReview', { userID: request.session.userID, album: album })
-  })
 })
 
 //refactor into reviews
@@ -45,19 +45,27 @@ router.post('/:albumID/new', (request, response) => {
   const review = request.body.review
 
   if (!userID) {
-    response.render('error', { error: {
-      message: 'You must be logged in to add a review' },
+    response.render('error', {
+      error: { message: 'You must be logged in to add a review' },
       userID: request.session.userID
     })
+  } else if (!review) {
+    response.render('error', {
+      error: { message: 'You didn\'t write a review' },
+      userID: request.session.userID
+    })
+  } else {
+    database.addReview(albumID, userID, review, (error) => {
+      if (error) {
+        response.status(500).render('error', {
+          error: error,
+          userID: request.session.userID
+        })
+      } else {
+        response.redirect('/albums/' + albumID)
+      }
+    })
   }
-
-  database.addReview(albumID, userID, review, (error) => {
-    if (error) {
-      response.status(500).render('error', { error: error, userID: request.session.userID })
-    } else {
-      response.redirect('/albums/' + albumID)
-    }
-  })
 })
 
 module.exports = router
