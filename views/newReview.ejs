@@ -12,7 +12,7 @@
   <div class="flex-column">
     <h1>New Review of <%= album.title %></h1>
 
-    <form method="post" action="/albums/<%= album.id %>/new" class="flex-column">
+    <form method="post" action="/reviews/<%= album.id %>/new" class="flex-column">
       <textarea name="review" rows="8" cols="80"></textarea>
       <input type="submit" value="Submit">
     </form>
