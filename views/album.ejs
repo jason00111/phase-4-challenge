@@ -11,25 +11,33 @@
 
   <% include navbar %>
 
-  <h1><%= album.title %></h1>
-  <em>by <%= album.artist %></em>
+  <div class="flex-column">
+    <h1><%= album.title %></h1>
+    <em>by <%= album.artist %></em>
+  </div>
 
-  <h2>Reviews</h2>
+  <div class="container">
 
-  <% if (userID) { %>
-    <a href="/reviews/<%= album.id %>/new">Add Review</a>
-  <% } %>
+    <% if (userID) { %>
+      <a href="/reviews/<%= album.id %>/new" class="u-pull-right">Add Review</a>
+    <% } %>
 
-  <div class="review-list">
+    <h2>Reviews</h2>
+
     <% reviews.forEach(function(review) { %>
-      <div>
-        <h5><a href="/albums/<%= review.album_id %>"><%= review.album %></a></h5>
-        <p><%= review.artist %></p>
-        <p><%= review.created %></p>
-        <p><%= review.review %></p>
-        <p>by <%= review.user %></p>
+      <div class="review">
+        <div class="u-pull-right date"><%= review.created %></div>
+        <div class="album-title">
+          <a href="/albums/<%= review.album_id %>">
+            <%= review.album %>
+          </a>
+        </div>
+        <div class="artist"><%= review.artist %></div>
+        <div class="review-text"><%= review.review %></div>
+        <div class="u-pull-right user">by <%= review.user %></div>
       </div>
     <% }) %>
+
   </div>
 
 </body>
