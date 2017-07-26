@@ -1,40 +1,17 @@
 const router = require('express').Router()
-const dbAlbums = require('../database/albums')
-const dbReviews = require('../database/reviews')
 
 const signupRoute = require('./signup')
 const signinRoute = require('./signin')
+const signoutRoute = require('./signout')
 const albumsRoute = require('./albums')
 const reviewsRoute = require('./reviews')
 const usersRoute = require('./users')
+const homeRoute = require('./home')
 
-router.get('/', (request, response) => {
-  Promise.all([
-    dbAlbums.getAlbums(),
-    dbReviews.getRecentReviews()
-  ])
-  .then(([albums, reviews]) => {
-    response.render('index', {
-      albums: albums,
-      reviews: reviews,
-      userID: request.session.userID
-    })
-  })
-  .catch(error => {
-    response.status(500).render('error', {
-      error: error,
-      userID: request.session.userID
-    })
-  })
-})
-
-router.get('/signout', (request, response) => {
-  request.session = null
-  response.redirect('/')
-})
-
+router.use('/', homeRoute)
 router.use('/signup', signupRoute)
 router.use('/signin', signinRoute)
+router.use('/signout', signoutRoute)
 router.use('/albums', albumsRoute)
 router.use('/reviews', reviewsRoute)
 router.use('/users', usersRoute)
