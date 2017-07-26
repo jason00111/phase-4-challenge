@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Vinyl : Sign Up</title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/skeleton.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
@@ -12,20 +15,38 @@
     <h1>Sign up for Vinyl</h1>
 
     <form method="post" action="/signup" class="flex-column">
-      <label class="form-input">
-        Name
-        <input name="name" type="text">
-      </label>
+      <div class="row">
+        <div class="one-half column">
+          <label class="form-input">
+            Name
+          </label>
+        </div>
+        <div class="one-half column">
+          <input name="name" type="text">
+        </div>
+      </div>
 
-      <label class="form-input">
-        Email
-        <input name="email" type="text">
-      </label>
+      <div class="row">
+        <div class="one-half column">
+          <label class="form-input">
+            Email
+          </label>
+        </div>
+        <div class="one-half column">
+          <input name="email" type="text">
+        </div>
+      </div>
 
-      <label class="form-input">
-        Password
-        <input name="password" type="password">
-      </label>
+      <div class="row">
+        <div class="one-half column">
+          <label class="form-input">
+            Password
+          </label>
+        </div>
+        <div class="one-half column">
+          <input name="password" type="password">
+        </div>
+      </div>
 
       <input type="submit" value="Sign Up">
     </form>

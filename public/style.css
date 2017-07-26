@@ -1,27 +1,50 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  background-color: #F6F6F6;
-  font-family: system-ui;
+a {
+  text-decoration: none;
+}
+
+.navbar {
+  margin: 1rem;
 }
 
 .main-image {
   width: 100%;
   height: 40vh;
-  background-image: url(vinyl2.jpg);
+  background-image: url(vinyl.jpg);
+  font-size: 15rem;
+  color: white;
+  padding-left: 10%;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
 }
 
 .main-title {
   font-size: 10rem;
-  color: #F6F6F6;
-  margin-left: 20px;
+  color: white;
+  margin-left: 1rem;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+.album {
+  margin: 1.5em 0;
+}
+
+.album-title {
+  font-size: 1.8rem;
+}
+
+.artist {
+  font-size: 1.2rem;
+}
+
+.review {
+  margin-top: 1.5rem;
+  margin-bottom: 7rem;
+}
+
+.review-text {
+  margin: 1rem 0;
 }
 
 .flex-column {

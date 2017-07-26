@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Vinyl</title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/skeleton.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
@@ -9,32 +12,49 @@
   <% include navbar %>
 
   <div class="main-image">
-    <span class="main-title">Vinyl</span>
+    Vinyl
   </div>
 
-  <h2>Records</h2>
+  <div class="container">
+    <div class="row">
+      <div class="four columns">
 
-  <div class="album-list">
-    <% albums.forEach(function(album) { %>
-      <div>
-        <h5><a href="/albums/<%= album.id %>"><%= album.title %></a></h5>
-        <span><%= album.artist %></span>
+        <h2>Records</h2>
+
+        <% albums.forEach(function(album) { %>
+          <div class="album">
+            <div class="album-title">
+              <a href="/albums/<%= album.id %>">
+                <%= album.title %>
+              </a>
+            </div>
+            <div class="artist">
+              <%= album.artist %>
+            </div>
+          </div>
+        <% }) %>
+
       </div>
-    <% }) %>
-  </div>
+      <div class="eight columns">
 
-  <h2>Reviews</h2>
+        <h2>Recent Reviews</h2>
 
-  <div class="review-list">
-    <% reviews.forEach(function(review) { %>
-      <div>
-        <h5><a href="/albums/<%= review.album_id %>"><%= review.album %></a></h5>
-        <p><%= review.artist %></p>
-        <p><%= review.created %></p>
-        <p><%= review.review %></p>
-        <p>by <%= review.user %></p>
+        <% reviews.forEach(function(review) { %>
+          <div class="review">
+            <div class="u-pull-right date"><%= review.created %></div>
+            <div class="album-title">
+              <a href="/albums/<%= review.album_id %>">
+                <%= review.album %>
+              </a>
+            </div>
+            <div class="artist"><%= review.artist %></div>
+            <div class="review-text"><%= review.review %></div>
+            <div class="u-pull-right user">by <%= review.user %></div>
+          </div>
+        <% }) %>
+
       </div>
-    <% }) %>
+    </div>
   </div>
 
 </body>
