@@ -1,12 +1,9 @@
 const query = require('./setup')
 
-const getAlbums = function() {
-  return query("SELECT * FROM albums", [])
-}
+const getAlbums = async () => await query("SELECT * FROM albums", [])
 
-const getAlbumsByID = function(albumID) {
-  return query("SELECT * FROM albums WHERE id = $1", [albumID])
-}
+const getAlbumsByID = async (albumID) =>
+  await query("SELECT * FROM albums WHERE id = $1", [albumID])
 
 module.exports = {
   getAlbums,
