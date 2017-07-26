@@ -9,7 +9,7 @@ a {
 .main-image {
   width: 100%;
   height: 40vh;
-  background-image: url(vinyl2.jpg);
+  background-image: url(vinyl.jpg);
   font-size: 15rem;
   color: white;
   padding-left: 10%;
@@ -45,4 +45,10 @@ a {
 
 .review-text {
   margin: 1rem 0;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

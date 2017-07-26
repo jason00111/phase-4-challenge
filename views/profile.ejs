@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>Vinyl : <%= user.name %></title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/skeleton.css">
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script type="text/javascript" src="/confirmation_script.js"></script>
 </head>
@@ -9,7 +12,7 @@
 
   <% include navbar %>
 
-  <div class="flex-column">
+  <div class="flex-column container">
     <h1><%= user.name %></h1>
 
     <table>
@@ -24,21 +27,27 @@
     </table>
   </div>
 
-  <h2>Reviews</h2>
+  <div class="container">
+    <h2>Reviews</h2>
 
-  <div class="review-list">
     <% reviews.forEach(function(review) { %>
-      <div>
-        <h5>
-          <a href="/albums/<%= review.album_id %>"><%= review.album %></a>
-          <img src="../delete.svg" class="trash-can" data-href="/reviews/<%= review.id %>/delete" />
-        </h5>
-        <p><%= review.artist %></p>
-        <p><%= review.created %></p>
-        <p><%= review.review %></p>
-        <p>by <%= review.user %></p>
+      <div class="review row">
+        <div class="ten columns">
+          <div class="u-pull-right date"><%= review.created %></div>
+          <div class="album-title">
+            <a href="/albums/<%= review.album_id %>">
+              <%= review.album %>
+            </a>
+          </div>
+          <div class="artist"><%= review.artist %></div>
+          <div class="review-text"><%= review.review %></div>
+        </div>
+        <div class="two columns">
+          <img src="../delete.svg" data-href="/reviews/<%= review.id %>/delete" />
+        </div>
       </div>
     <% }) %>
+
   </div>
 
 </body>
