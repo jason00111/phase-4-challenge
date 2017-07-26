@@ -31,7 +31,7 @@
       <div>
         <h5>
           <a href="/albums/<%= review.album_id %>"><%= review.album %></a>
-          <img src="../delete.svg" class="trash-can" href="/reviews/<%= review.id %>/delete" />
+          <img src="../delete.svg" class="trash-can" data-href="/reviews/<%= review.id %>/delete" />
         </h5>
         <p><%= review.artist %></p>
         <p><%= review.created %></p>

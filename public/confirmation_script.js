@@ -6,7 +6,7 @@ window.onload = function () {
       var confirmResult = window.confirm('Are you sure you want to delete this review?')
 
       if (confirmResult) {
-        var href = event.target.getAttribute('href')
+        var href = event.target.getAttribute('data-href')
         window.location.href = href
       }
     })
