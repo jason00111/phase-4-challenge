@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const bcrypt = require('bcrypt')
+const encrypt = require('../encrypt')
 const dbUsers = require('../database/users')
 
 router.get('/', (request, response) => {
@@ -19,13 +19,9 @@ router.post('/', (request, response) => {
         userID: request.session.userID
       })
     } else {
-      bcrypt.compare(password, user.password, (error, match) => {
-        if (error) {
-          response.status(500).render('error', {
-            error: error,
-            userID: request.session.userID
-          })
-        } else if (match) {
+      return encrypt.compare(password, user.password)
+      .then(match => {
+        if (match) {
           request.session.userID = user.id
           response.redirect(`users/${user.id}`)
         } else {

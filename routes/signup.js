@@ -1,8 +1,6 @@
 const router = require('express').Router()
-const bcrypt = require('bcrypt')
 const dbUsers = require('../database/users')
-
-const saltRounds = 10
+const encrypt = require('../encrypt')
 
 router.get('/', (request, response) => {
   response.render('signup', { userID: request.session.userID })
@@ -21,24 +19,12 @@ router.post('/', (request, response) => {
         userID: request.session.userID
       })
     } else {
-      bcrypt.hash(password, saltRounds, (error, hash) => {
-        if (error) {
-          response.status(500).render('error', {
-            error: error,
-            userID: request.session.userID
-          })
-        } else {
-          dbUsers.addUser(name, email, hash)
-          .then(() => {
-            response.redirect('/signin')
-          })
-          .catch(error => {
-            response.status(500).render('error', {
-              error: error,
-              userID: request.session.userID
-            })
-          })
-        }
+      return encrypt.hash(password)
+      .then(hash => {
+        return dbUsers.addUser(name, email, hash)
+        .then(() => {
+          response.redirect('/signin')
+        })
       })
     }
   })
