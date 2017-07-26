@@ -9,29 +9,14 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const email = request.body.email
   const password = request.body.password
-  dbUsers.getUserByEmail(email)
-  .then(users => {
-    const user = users[0]
 
-    if (!user) {
-      response.status(403).render('error', {
-        error: { message: 'Email not found. Sign up first.' },
-        userID: request.session.userID
-      })
-    } else {
-      return encrypt.compare(password, user.password)
-      .then(match => {
-        if (match) {
-          request.session.userID = user.id
-          response.redirect(`users/${user.id}`)
-        } else {
-          response.status(403).render('error', {
-            error: {message: 'Incorrect password.'},
-            userID: request.session.userID
-          })
-        }
-      })
-    }
+  userExists(email)
+  .then(user => {
+    return encrypt.compare(password, user.password)
+    .then(match => {
+      request.session.userID = user.id
+      response.redirect(`users/${user.id}`)
+    })
   })
   .catch(error => {
     response.status(500).render('error', {
@@ -40,5 +25,21 @@ router.post('/', (request, response) => {
     })
   })
 })
+
+const userExists = function(email) {
+  return new Promise((resolve, reject) => {
+    dbUsers.getUserByEmail(email)
+    .then(users => {
+      const user = users[0]
+
+      if (!user) {
+        reject({message: 'Email not found. Sign up first.'})
+      } else {
+        resolve(user)
+      }
+    })
+    .catch(error => reject(error))
+  })
+}
 
 module.exports = router

@@ -18,8 +18,10 @@ const compare = function(password, hash) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, hash, (error, match) => {
       if (error) {
-        reject(error)
-      } else {
+        resolve(error)
+      } else if (!match) {
+        reject({message: 'Incorrect password.'})
+      } else if (match){
         resolve(match)
       }
     })
