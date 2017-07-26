@@ -50,7 +50,7 @@ router.get('/:albumID/new', (request, response) => {
     dbAlbums.getAlbumsByID(albumID)
     .then(albums => {
       const album = albums[0]
-      response.render('newReview', { userID: request.session.userID, album: album })
+      response.render('new_review', { userID: request.session.userID, album: album })
     })
     .catch(error => {
       response.status(500).render('error', {
