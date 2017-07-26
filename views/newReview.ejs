@@ -3,7 +3,6 @@
 <head>
   <title>Vinyl : New Review of <%= album.title %></title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <script type="text/javascript" src="/script.js"></script>
 </head>
 <body>
 
@@ -12,7 +11,7 @@
   <div class="flex-column">
     <h1>New Review of <%= album.title %></h1>
 
-    <form method="post" action="/albums/<%= album.id %>/new" class="flex-column">
+    <form method="post" action="/reviews/<%= album.id %>/new" class="flex-column">
       <textarea name="review" rows="8" cols="80"></textarea>
       <input type="submit" value="Submit">
     </form>

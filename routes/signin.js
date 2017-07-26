@@ -1,5 +1,7 @@
 const router = require('express').Router()
-const database = require('../database')
+const encrypt = require('../encrypt')
+
+const { userExists } = require('./helpers')
 
 router.get('/', (request, response) => {
   response.render('signin', { userID: request.session.userID })
@@ -8,30 +10,20 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const email = request.body.email
   const password = request.body.password
-  database.getUserByEmail(email, (error, users) => {
-    if (error) {
-      response.status(500).render('error', {
-        error: error,
-        userID: request.session.userID
-      })
-    } else {
-      const user = users[0]
 
-      if (!user) {
-        response.status(403).render('error', {
-          error: { message: 'Email not found. Sign up first.' },
-          userID: request.session.userID
-        })
-      } else if (user.password !== password) {
-        response.status(403).render('error', {
-          error: {message: 'Incorrect password.'},
-          userID: request.session.userID
-        })
-      } else {
-        request.session.userID = user.id
-        response.redirect(`users/${user.id}`)
-      }
-    }
+  userExists(email)
+  .then(user => {
+    return encrypt.compare(password, user.password)
+    .then(match => {
+      request.session.userID = user.id
+      response.redirect(`users/${user.id}`)
+    })
+  })
+  .catch(error => {
+    response.status(500).render('error', {
+      error: error,
+      userID: request.session.userID
+    })
   })
 })
 

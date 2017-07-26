@@ -3,7 +3,6 @@
 <head>
   <title>Vinyl : <%= album.title %></title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <script type="text/javascript" src="/script.js"></script>
 </head>
 <body>
 
@@ -15,7 +14,7 @@
   <h2>Reviews</h2>
 
   <% if (userID) { %>
-    <a href="/albums/<%= album.id %>/new">Add Review</a>
+    <a href="/reviews/<%= album.id %>/new">Add Review</a>
   <% } %>
 
   <div class="review-list">

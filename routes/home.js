@@ -2,18 +2,14 @@ const router = require('express').Router()
 const dbAlbums = require('../database/albums')
 const dbReviews = require('../database/reviews')
 
-router.get('/:albumID', (request, response) => {
-  const albumID = request.params.albumID
-
+router.get('/', (request, response) => {
   Promise.all([
-    dbAlbums.getAlbumsByID(albumID),
-    dbReviews.getReviewsByAlbumID(albumID)
+    dbAlbums.getAlbums(),
+    dbReviews.getRecentReviews()
   ])
   .then(([albums, reviews]) => {
-    const album = albums[0]
-
-    response.render('album', {
-      album: album,
+    response.render('index', {
+      albums: albums,
       reviews: reviews,
       userID: request.session.userID
     })
