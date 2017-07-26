@@ -12,33 +12,27 @@ router.get('/:reviewID/delete', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    dbReviews.getReviewByID(reviewID, (error1, reviews) => {
-      if (error1) {
+    dbReviews.getReviewByID(reviewID)
+    .then(reviews => {
+      const review = reviews[0]
+
+      if (review.user_id != userID) {
         response.render('error', {
-          error: error1,
+          error: { message: 'You cannot delete a review which you didn\'t create' },
           userID: request.session.userID
         })
       } else {
-        const review = reviews[0]
-
-        if (review.user_id != userID) {
-          response.render('error', {
-            error: { message: 'You cannot delete a review which you didn\'t create' },
-            userID: request.session.userID
-          })
-        } else {
-          dbReviews.deleteReview(reviewID, error2 => {
-            if (error2) {
-              response.render('error', {
-                error: error2,
-                userID: request.session.userID
-              })
-            } else {
-              response.redirect('/users/' + userID)
-            }
-          })
-        }
+        return dbReviews.deleteReview(reviewID)
+        .then(() => {
+          response.redirect('/users/' + userID)
+        })
       }
+    })
+    .catch(error => {
+      response.status(500).render('error', {
+        error: error,
+        userID: request.session.userID
+      })
     })
   }
 })
@@ -53,10 +47,16 @@ router.get('/:albumID/new', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    // check this, do we really need albums here?
-    dbAlbums.getAlbumsByID(albumID, (error, albums) => {
+    dbAlbums.getAlbumsByID(albumID)
+    .then(albums => {
       const album = albums[0]
       response.render('newReview', { userID: request.session.userID, album: album })
+    })
+    .catch(error => {
+      response.status(500).render('error', {
+        error: error,
+        userID: request.session.userID
+      })
     })
   }
 })
@@ -77,15 +77,15 @@ router.post('/:albumID/new', (request, response) => {
       userID: request.session.userID
     })
   } else {
-    dbReviews.addReview(albumID, userID, review, (error) => {
-      if (error) {
-        response.status(500).render('error', {
-          error: error,
-          userID: request.session.userID
-        })
-      } else {
-        response.redirect('/albums/' + albumID)
-      }
+    dbReviews.addReview(albumID, userID, review)
+    .then(() => {
+      response.redirect('/albums/' + albumID)
+    })
+    .catch(error => {
+      response.status(500).render('error', {
+        error: error,
+        userID: request.session.userID
+      })
     })
   }
 })

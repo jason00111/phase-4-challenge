@@ -13,40 +13,41 @@ router.post('/', (request, response) => {
   const email = request.body.email
   const password = request.body.password
 
-  dbUsers.getUserByEmail(email, (error1, users) => {
-    if (error1) {
-      response.status(500).render('error', {
-        error: error1,
-        userID: request.session.userID
-      })
-    } else if (users.length !== 0) {
+  dbUsers.getUserByEmail(email)
+  .then(users => {
+    if (users.length !== 0) {
       response.status(403).render('error', {
         error: { message: 'There is already an account registered with this email' },
         userID: request.session.userID
       })
     } else {
-      bcrypt.hash(password, saltRounds, (error2, hash) => {
-        if (error2) {
+      bcrypt.hash(password, saltRounds, (error, hash) => {
+        if (error) {
           response.status(500).render('error', {
-            error: error2,
+            error: error,
             userID: request.session.userID
           })
         } else {
-          dbUsers.addUser(name, email, hash, error3 => {
-            if (error3) {
-              response.status(500).render('error', {
-                error: error3,
-                userID: request.session.userID
-              })
-            } else {
-              response.redirect('/signin')
-            }
+          dbUsers.addUser(name, email, hash)
+          .then(() => {
+            response.redirect('/signin')
+          })
+          .catch(error => {
+            response.status(500).render('error', {
+              error: error,
+              userID: request.session.userID
+            })
           })
         }
       })
     }
   })
-
+  .catch(error => {
+    response.status(500).render('error', {
+      error: error,
+      userID: request.session.userID
+    })
+  })
 })
 
 module.exports = router

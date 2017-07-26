@@ -8,30 +8,24 @@ router.get('/:userID', (request, response) => {
   if (userID != request.session.userID) {
     response.redirect('/signin')
   } else {
-    dbUsers.getUserByID(userID, (error1, users) => {
-      if (error1) {
-        response.status(500).render('error', {
-          error: error1,
+    dbUsers.getUserByID(userID)
+    .then(users => {
+      const user = users[0]
+
+      return dbReviews.getReviewsByUserID(userID)
+      .then(reviews => {
+        response.render('profile', {
+          user: user,
+          reviews: reviews,
           userID: request.session.userID
         })
-      } else {
-        const user = users[0]
-
-        dbReviews.getReviewsByUserID(userID, (error2, reviews) => {
-          if (error2) {
-            response.status(500).render('error', {
-              error: error2,
-              userID: request.session.userID
-            })
-          } else {
-            response.render('profile', {
-              user: user,
-              reviews: reviews,
-              userID: request.session.userID
-            })
-          }
-        })
-      }
+      })
+    })
+    .catch(error => {
+      response.status(500).render('error', {
+        error: error,
+        userID: request.session.userID
+      })
     })
   }
 })

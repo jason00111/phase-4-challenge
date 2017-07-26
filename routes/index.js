@@ -9,28 +9,22 @@ const reviewsRoute = require('./reviews')
 const usersRoute = require('./users')
 
 router.get('/', (request, response) => {
-  dbAlbums.getAlbums((error1, albums) => {
-    if (error1) {
-      response.status(500).render('error', {
-        error: error1,
-        userID: request.session.userID
-      })
-    } else {
-      dbReviews.getRecentReviews((error2, reviews) => {
-        if (error2) {
-          response.status(500).render('error', {
-            error: error2,
-            userID: request.session.userID
-          })
-        } else {
-          response.render('index', {
-            albums: albums,
-            reviews: reviews,
-            userID: request.session.userID
-          })
-        }
-      })
-    }
+  Promise.all([
+    dbAlbums.getAlbums(),
+    dbReviews.getRecentReviews()
+  ])
+  .then(([albums, reviews]) => {
+    response.render('index', {
+      albums: albums,
+      reviews: reviews,
+      userID: request.session.userID
+    })
+  })
+  .catch(error => {
+    response.status(500).render('error', {
+      error: error,
+      userID: request.session.userID
+    })
   })
 })
 
