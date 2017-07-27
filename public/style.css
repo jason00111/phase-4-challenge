@@ -33,13 +33,17 @@ a {
   font-size: 1.8rem;
 }
 
+.big-album-title {
+  margin-bottom: 0;
+}
+
 .artist {
   font-size: 1.2rem;
 }
 
 .review {
   margin-top: 1.5rem;
-  margin-bottom: 7rem;
+  margin-bottom: 9rem;
 }
 
 .review-text {
@@ -50,7 +54,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 6rem;
+  margin-top: 6rem 0;
 }
 
 .trash-can:hover {

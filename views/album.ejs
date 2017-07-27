@@ -12,14 +12,14 @@
   <% include navbar %>
 
   <div class="flex-column">
-    <h1><%= album.title %></h1>
-    <em>by <%= album.artist %></em>
+    <h1 class="big-album-title"><%= album.title %></h1>
+    <div><%= album.artist %></div>
   </div>
 
   <div class="container">
 
     <% if (userID) { %>
-      <a href="/reviews/<%= album.id %>/new" class="u-pull-right">Add Review</a>
+      <a href="/reviews/<%= album.id %>/new" class="u-pull-right button">Add Review</a>
     <% } %>
 
     <h2>Reviews</h2>
