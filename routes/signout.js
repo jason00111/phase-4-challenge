@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require('express-promise-router')()
 
 router.get('/', (request, response) => {
   request.session = null

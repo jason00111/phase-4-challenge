@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require('express-promise-router')()
 
 const signupRoute = require('./signup')
 const signinRoute = require('./signin')
@@ -18,6 +18,15 @@ router.use('/users', usersRoute)
 
 router.use((request, response) => {
   response.status(404).render('not_found', { userID: request.session.userID })
+})
+
+router.use((error, request, response, next) => {
+  response.status(500).render('error', {
+    error: error,
+    userID: request.session.userID
+  })
+
+  next(error)
 })
 
 module.exports = router
