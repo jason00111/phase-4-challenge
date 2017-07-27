@@ -2,32 +2,31 @@ const router = require('express').Router()
 const dbUsers = require('../database/users')
 const dbReviews = require('../database/reviews')
 
-router.get('/:userID', (request, response) => {
+router.get('/:userID', async (request, response) => {
   const userID = request.params.userID
 
-  if (userID != request.session.userID) {
-    response.redirect('/signin')
-  } else {
-    dbUsers.getUserByID(userID)
-    .then(users => {
-      const user = users[0]
+  try {
+    if (userID != request.session.userID) {
+      response.redirect('/signin')
+      return
+    }
 
-      return dbReviews.getReviewsByUserID(userID)
-      .then(reviews => {
-        response.render('profile', {
-          user: user,
-          reviews: reviews,
-          userID: request.session.userID
-        })
-      })
+    const users = await dbUsers.getUserByID(userID)
+    const user = users[0]
+    const reviews = await dbReviews.getReviewsByUserID(userID)
+
+    response.render('profile', {
+      user: user,
+      reviews: reviews,
+      userID: request.session.userID
     })
-    .catch(error => {
-      response.status(500).render('error', {
-        error: error,
-        userID: request.session.userID
-      })
+  } catch (error) {
+    response.status(500).render('error', {
+      error: error,
+      userID: request.session.userID
     })
   }
+
 })
 
 module.exports = router
