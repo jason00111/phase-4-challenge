@@ -17,24 +17,24 @@ const reviewsQuery = `
   ON
     users.id = reviews.user_id `
 
-const getRecentReviews = async () =>
-  await query(reviewsQuery + 'ORDER BY time DESC LIMIT 3', [])
+const getRecentReviews = () =>
+  query(reviewsQuery + 'ORDER BY time DESC LIMIT 3', [])
 
-const getReviewsByAlbumID = async (albumID) =>
-  await query(reviewsQuery + 'WHERE album_id = $1 ORDER BY time DESC', [albumID])
+const getReviewsByAlbumID = (albumID) =>
+  query(reviewsQuery + 'WHERE album_id = $1 ORDER BY time DESC', [albumID])
 
-const addReview = async (albumID, userID, review) =>
-  await query("INSERT INTO reviews (album_id, user_id, review) VALUES ($1, $2, $3) RETURNING *",
+const addReview = (albumID, userID, review) =>
+  query("INSERT INTO reviews (album_id, user_id, review) VALUES ($1, $2, $3) RETURNING *",
     [albumID, userID, review])
 
-const getReviewsByUserID = async (userID) =>
-  await query(reviewsQuery + 'WHERE user_id = $1 ORDER BY time DESC', [userID])
+const getReviewsByUserID = (userID) =>
+  query(reviewsQuery + 'WHERE user_id = $1 ORDER BY time DESC', [userID])
 
-const deleteReview = async (reviewID) =>
-  await query("DELETE FROM reviews WHERE id = $1", [reviewID])
+const deleteReview = (reviewID) =>
+  query("DELETE FROM reviews WHERE id = $1", [reviewID])
 
-const getReviewByID = async (reviewID) =>
-  await query(reviewsQuery + 'WHERE reviews.id = $1', [reviewID])
+const getReviewByID = (reviewID) =>
+  query(reviewsQuery + 'WHERE reviews.id = $1', [reviewID])
 
 module.exports = {
   getRecentReviews,
