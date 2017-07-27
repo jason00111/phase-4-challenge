@@ -15,16 +15,24 @@
   <div class="flex-column container">
     <h1><%= user.name %></h1>
 
-    <table>
-      <tr>
-        <td>Email</td>
-        <td><%= user.email %></td>
-      </tr>
-      <tr>
-        <td>Date Joined</td>
-        <td><%= user.joined %></td>
-      </tr>
-    </table>
+    <div class="row profile-details">
+      <div class="one-half column">
+        Email
+      </div>
+      <div class="one-half column">
+        <%= user.email %>
+      </div>
+    </div>
+
+    <div class="row profile-details">
+      <div class="one-half column">
+        Date Joined
+      </div>
+      <div class="one-half column">
+        <%= user.joined %>
+      </div>
+    </div>
+
   </div>
 
   <div class="container">

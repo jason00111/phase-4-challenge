@@ -54,9 +54,15 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 6rem 0;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 
 .trash-can:hover {
   cursor: pointer;
+}
+
+.profile-details {
+  width: 40%;
+  margin: 0.5rem 0;
 }
