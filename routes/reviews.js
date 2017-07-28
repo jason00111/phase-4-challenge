@@ -31,10 +31,7 @@ router.get('/:albumID/new', async (request, response) => {
   const albums = await dbAlbums.getAlbumsByID(albumID)
   const album = albums[0]
 
-  response.render('new_review', {
-    album: album,
-    userID: request.session.userID
-  })
+  response.render('new_review', { album, userID: request.session.userID })
 })
 
 router.post('/:albumID/new', async (request, response) => {

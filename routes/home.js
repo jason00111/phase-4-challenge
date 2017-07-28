@@ -6,11 +6,7 @@ router.get('/', async (request, response) => {
   const albums = await dbAlbums.getAlbums()
   const reviews = await dbReviews.getRecentReviews()
 
-  response.render('index', {
-    albums: albums,
-    reviews: reviews,
-    userID: request.session.userID
-  })
+  response.render('index', { albums, reviews, userID: request.session.userID })
 })
 
 module.exports = router

@@ -8,11 +8,7 @@ router.get('/:albumID', async (request, response) => {
   const reviews = await dbReviews.getReviewsByAlbumID(albumID)
   const album = albums[0]
 
-  response.render('album', {
-    album: album,
-    reviews: reviews,
-    userID: request.session.userID
-  })
+  response.render('album', { album, reviews, userID: request.session.userID })
 })
 
 module.exports = router

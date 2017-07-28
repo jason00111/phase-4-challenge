@@ -8,10 +8,7 @@ router.get('/', (request, response) => {
 router.post('/', async (request, response) => {
   const query = request.body.query
   const albums = await dbSearch.search(query)
-  response.render('search_results', {
-    albums,
-    userID: request.session.userID
-  })
+  response.render('search_results', { albums, userID: request.session.userID })
 })
 
 module.exports = router

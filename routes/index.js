@@ -23,10 +23,7 @@ router.use((request, response) => {
 })
 
 router.use((error, request, response, next) => {
-  response.status(500).render('error', {
-    error: error,
-    userID: request.session.userID
-  })
+  response.status(500).render('error', { error, userID: request.session.userID })
 
   next(error)
 })

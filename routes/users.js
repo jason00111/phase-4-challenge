@@ -14,11 +14,7 @@ router.get('/:userID', async (request, response) => {
   const user = users[0]
   const reviews = await dbReviews.getReviewsByUserID(userID)
 
-  response.render('profile', {
-    user: user,
-    reviews: reviews,
-    userID: request.session.userID
-  })
+  response.render('profile', { user, reviews, userID: request.session.userID })
 })
 
 module.exports = router
