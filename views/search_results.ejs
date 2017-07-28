@@ -15,20 +15,16 @@
 
     <h2>Records</h2>
 
-    <div>
-      <% albums.forEach(function(album) { %>
-        <div class="album">
-          <div class="album-title">
-            <a href="/albums/<%= album.id %>">
-              <%= album.title %>
-            </a>
-          </div>
-          <div class="artist">
-            <%= album.artist %>
-          </div>
-        </div>
-      <% }) %>
-    </div>
+    <% albums.forEach(function(album) { %>
+      <div class="album-title">
+        <a href="/albums/<%= album.id %>">
+          <%= album.title %>
+        </a>
+      </div>
+      <div class="artist" style="margin-bottom: 2em;">
+        <%= album.artist %>
+      </div>
+    <% }) %>
 
   </div>
 
