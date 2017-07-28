@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vinyl : Search Results</title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+
+  <% include navbar %>
+
+  <div class="container flex-column">
+
+    <h2>Records</h2>
+
+    <div>
+      <% albums.forEach(function(album) { %>
+        <div class="album">
+          <div class="album-title">
+            <a href="/albums/<%= album.id %>">
+              <%= album.title %>
+            </a>
+          </div>
+          <div class="artist">
+            <%= album.artist %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+  </div>
+
+</body>
+</html>

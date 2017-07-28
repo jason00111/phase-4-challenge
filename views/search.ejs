@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vinyl : Search</title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+
+  <% include navbar %>
+
+  <div class="flex-column">
+    <h1>Search for Albums</h1>
+
+    <form method="post" action="/search" class="flex-column">
+      <div class="row">
+        <div class="one-half column">
+          <label class="form-input">
+            Search for Albums
+          </label>
+        </div>
+        <div class="one-half column">
+          <input name="query" type="text">
+        </div>
+      </div>
+
+      <input type="submit" value="Search">
+    </form>
+  </div>
+
+</body>
+</html>
